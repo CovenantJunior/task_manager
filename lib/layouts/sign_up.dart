@@ -199,7 +199,7 @@ class _SignUpState extends State<SignUp> with TickerProviderStateMixin {
                             width: double.infinity,
                             height: 45,
                             decoration: BoxDecoration(
-                              border: Border.all(width: 2),
+                              border: Border.all(width: 1),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Center(
