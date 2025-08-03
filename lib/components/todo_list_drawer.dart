@@ -46,7 +46,7 @@ class _TodoListDrawerState extends State<TodoListDrawer> {
               title: "AI Assitant",
               leading: const Icon(Icons.assistant_outlined),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const AIAssistantPage()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const AIAssistant()));
               }
             ),
 

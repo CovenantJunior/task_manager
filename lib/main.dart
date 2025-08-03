@@ -3,6 +3,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/controllers/todo_list_controller.dart';
 import 'package:task_manager/services/notification_service.dart';
@@ -60,13 +62,18 @@ void onStart(ServiceInstance service) async {
   });
 }
 
+void initializeAIKeys() async {
+  // GEMINI_API_KEY (.env)
+  await dotenv.load(fileName: ".env");
+  String? apiKey = dotenv.env['GEMINI_API_KEY'];
+  Gemini.init(apiKey: apiKey!, enableDebugging: true);
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   NotificationService().initNotifications();
   initializeService();
-  // JsonReader jsonReader = JsonReader();
-  // Credential credential = await jsonReader.readCredentials();
-  // await dotenv.load(fileName: "assets/.env");
+  initializeAIKeys();
   await TodoListDatabase.initialize();
   runApp(
     MultiProvider(

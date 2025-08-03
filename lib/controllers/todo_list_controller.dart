@@ -493,7 +493,7 @@ class TodoListDatabase extends ChangeNotifier{
     }
 
     currentUser.lastLogin = DateTime.now();
-    currentUser.expires = DateTime.now().add(const Duration(days: 14));
+    currentUser.expires = DateTime.now().add(const Duration(minutes: 30));
     await isar.writeTxn(() => isar.todoUsers.put(currentUser));
     user = [currentUser];
     notifyListeners();
