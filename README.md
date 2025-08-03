@@ -42,7 +42,6 @@ Gemini.init(apiKey: 'GEMINI-API-KEY');
 - If date detected (e.g., "tomorrow"), opens manual task dialog
 
 ## Snapshots
-<img width="1080" height="2400" alt="Screenshot_1754248543" src="https://github.com/user-attachments/assets/f66e1d96-c9c5-489a-9a9d-53b183ce0989" />
-<img width="1080" height="2400" alt="Screenshot_1754248577" src="https://github.com/user-attachments/assets/2b9e58c8-65a8-4116-b519-b38e44be99f5" />
-<img width="1080" height="2400" alt="Screenshot_1754248586" src="https://github.com/user-attachments/assets/fba5829a-7df4-40fd-9eb5-439fa1a16403" />
-<img width="1080" height="2400" alt="Screenshot_1754248596" src="https://github.com/user-attachments/assets/7c25e372-8e06-487d-9ad4-14a290e990bf" />
+| Task Input | Task List | Task Details | Preferences |
+|------------|-----------|--------------|-------------|
+| ![input](https://github.com/user-attachments/assets/f66e1d96-c9c5-489a-9a9d-53b183ce0989) | ![list](https://github.com/user-attachments/assets/2b9e58c8-65a8-4116-b519-b38e44be99f5) | ![details](https://github.com/user-attachments/assets/fba5829a-7df4-40fd-9eb5-439fa1a16403) | ![prefs](https://github.com/user-attachments/assets/7c25e372-8e06-487d-9ad4-14a290e990bf) |
