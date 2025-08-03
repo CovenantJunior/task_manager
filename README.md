@@ -4,7 +4,7 @@ A simple, category-based to-do list app with reminders, due dates, and an option
 
 ---
 
-## 🚀 Features
+## Features
 
 - Add, categorize, and schedule tasks
 - Set reminders/notifications (minute, hourly, daily, weekly)
@@ -13,7 +13,7 @@ A simple, category-based to-do list app with reminders, due dates, and an option
 
 ---
 
-## 🛠 Setup
+## Setup
 
 ```bash
 git clone https://github.com/CovenantJunior/task_manager.git
@@ -25,12 +25,15 @@ To enable AI:
 ```bash
 Gemini.init(apiKey: 'GEMINI-API-KEY');
 ```
-## 💡 Example Prompt
+## Example Prompt
 
 "Plan 3 work tasks and 2 wellness tasks for this weekend"
 
-## 📌 Notes
+## Notes
 
 - Uses `gemini-1.5-flash` (optional)  
 - Tasks are parsed from numbered output  
-- If date detected (e.g., "tomorrow"), opens manual task dialog  
+- If date detected (e.g., "tomorrow"), opens manual task dialog
+
+## Snapshots
+
