@@ -1,16 +1,36 @@
-# task_manager
+# ✅ Task Manager (Optional AI Assistant)
 
-A new Flutter project.
+A simple, category-based to-do list app with reminders, due dates, and an optional AI-powered assistant to generate tasks from plain text prompts.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🚀 Features
 
-A few resources to get you started if this is your first Flutter project:
+- Add, categorize, and schedule tasks
+- Set reminders (minute, hourly, daily, weekly)
+- Speech-to-text input support
+- ✅ Optional: Use AI (Gemini) to generate task lists from prompts
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🛠 Setup
+
+```bash
+git clone https://github.com/CovenantJunior/task_manager.git
+cd task_manager
+flutter pub get
+```
+To enable AI:
+
+```bash
+Gemini.init(apiKey: 'GEMINI-API-KEY');
+```
+## 💡 Example Prompt
+
+"Plan 3 work tasks and 2 wellness tasks for this weekend"
+
+## 📌 Notes
+
+- Uses `gemini-1.5-flash` (optional)  
+- Tasks are parsed from numbered output  
+- If date detected (e.g., "tomorrow"), opens manual task dialog  
