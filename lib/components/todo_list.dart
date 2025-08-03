@@ -366,9 +366,9 @@ class _TodoState extends State<Todo> with SingleTickerProviderStateMixin {
                 if (context.read<TodoListDatabase>().preferences.first.vibration) Vibration.vibrate(duration: 50);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)
-              ),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)
+                    ),
                     duration: const Duration(seconds: 2),
                     content: const Text(
                       'Oops, blank shot!',

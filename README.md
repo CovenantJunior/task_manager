@@ -7,9 +7,15 @@ A simple, category-based to-do list app with reminders, due dates, and an option
 ## Features
 
 - Add, categorize, and schedule tasks
-- Set reminders/notifications (minute, hourly, daily, weekly)
-- Speech-to-text input support
-- ✅ Optional: Use AI (Gemini) to generate task lists from prompts
+- Smart reminder intervals: Every Minute, Hourly, Daily, Weekly
+- Dark Mode support
+- Toggleable in-app vibration and notification settings
+- Speech-to-Text input for fast task creation
+- Optional: AI-powered task generation (Gemini)
+- Clipboard access toggle (optional)
+- Auto-delete completed tasks (optional)
+- Delete task on dismiss (swipe gesture)
+- Bulk trash management
 
 ---
 

@@ -480,7 +480,7 @@ class _AIAssistantState extends State<AIAssistant> {
                       trailing: IconButton(
                         icon: tasks[index].length < 100 ? const Icon(Icons.add) : const SizedBox(),
                         onPressed: () async {
-                          Navigator.pop(context);
+                          // Navigator.pop(context);
                           createTodoList(tasks[index], context);
                         }
                       ),
