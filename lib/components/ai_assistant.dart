@@ -56,7 +56,7 @@ class _AIAssistantState extends State<AIAssistant> {
 
     try {
       final response = await Gemini.instance.text(
-        'Generate a simple, numbered to-do task list based on this request: "$prompt"',
+        'Generate a simple, numbered to-do task list based on this request: "$prompt". No markdown format',
         modelName: 'models/gemini-1.5-flash',
       );
 
@@ -393,9 +393,9 @@ class _AIAssistantState extends State<AIAssistant> {
                 if (context.read<TodoListDatabase>().preferences.first.vibration) Vibration.vibrate(duration: 50);
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)
-              ),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                  ),
                     duration: const Duration(seconds: 2),
                     content: const Text(
                       'Oops, blank shot!',
@@ -480,7 +480,6 @@ class _AIAssistantState extends State<AIAssistant> {
                       trailing: IconButton(
                         icon: tasks[index].length < 100 ? const Icon(Icons.add) : const SizedBox(),
                         onPressed: () async {
-                          // Navigator.pop(context);
                           createTodoList(tasks[index], context);
                         }
                       ),
