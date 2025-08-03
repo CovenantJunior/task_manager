@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/components/todo_list_drawer_tile.dart';
 import 'package:task_manager/controllers/todo_list_controller.dart';
-import 'package:task_manager/layouts/ai_assistant.dart';
 import 'package:task_manager/layouts/todo_list_preferences.dart';
 import 'package:task_manager/layouts/todo_list_starred.dart';
 import 'package:task_manager/layouts/todo_trash_page.dart';
@@ -43,14 +42,6 @@ class _TodoListDrawerState extends State<TodoListDrawer> {
             ),
 
             TodoListDrawerTile(
-              title: "AI Assitant",
-              leading: const Icon(Icons.assistant_outlined),
-              onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => const AIAssistant()));
-              }
-            ),
-
-            TodoListDrawerTile(
               title: "Starred",
               leading: const Icon(Icons.star_border_rounded),
               onTap: () {
@@ -86,7 +77,13 @@ class _TodoListDrawerState extends State<TodoListDrawer> {
               onTap: () async {
                 context.read<TodoListDatabase>().clearUser();
               }
-            ) : const SizedBox()
+            ) : TodoListDrawerTile(
+              title: "Session expired",
+              leading: const Icon(Icons.timer_off),
+              onTap: () async {
+                context.read<TodoListDatabase>().clearUser();
+              }
+            )
           ],
         ),
       ),

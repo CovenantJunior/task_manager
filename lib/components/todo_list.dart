@@ -11,6 +11,7 @@ import 'package:popover/popover.dart';
 import 'package:provider/provider.dart';
 import 'package:task_manager/components/todo_list_options.dart';
 import 'package:task_manager/controllers/todo_list_controller.dart';
+import 'package:task_manager/components/ai_assistant.dart';
 import 'package:task_manager/services/audio_service.dart';
 import 'package:task_manager/services/notification_service.dart';
 import 'package:vibration/vibration.dart';
@@ -1301,6 +1302,10 @@ class _TodoState extends State<Todo> with SingleTickerProviderStateMixin {
       }
     }
 
+    void aiAssistant() {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const AIAssistant()));
+    }
+
     return GestureDetector(
       onTap: () {
         widget.closeSearch();
@@ -1683,34 +1688,51 @@ class _TodoState extends State<Todo> with SingleTickerProviderStateMixin {
                     )
                   : const SizedBox(),
               const SizedBox(height: 8),
-              Tooltip(
-                message: "Add a plan",
-                child: RotationTransition(
-                  turns: Tween(begin: 0.0, end: widget.isSearch ? 0.25 : 0.0)
-                      .animate(_controller),
-                  child: FloatingActionButton(
-                    heroTag: null,
-                    onPressed: () {
-                      if (widget.isSearch == true) {
-                        widget.closeSearch();
-                        readTodoLists();
-                      } else {
-                        createTodoList('', context);
-                      }
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    onPressed: () => {
+                      aiAssistant()
                     },
-                    mini: true,
-                    shape:  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    backgroundColor: Theme.of(context).colorScheme.onSecondary,
-                    child: Transform.rotate(
-                      angle: widget.isSearch
-                          ? 45 * (3.141592653589793238 / 180)
-                          : 0.0, // Rotate 45 degrees if widget.isSearch is true
-                      child: const Icon(Icons.add),
+                    child: const Text(
+                      'Ai Task Assistant',
+                      style: TextStyle(
+                        fontFamily: 'Quicksand',
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
-                ),
+                  Tooltip(
+                    message: "Add a plan",
+                    child: RotationTransition(
+                      turns: Tween(begin: 0.0, end: widget.isSearch ? 0.25 : 0.0)
+                          .animate(_controller),
+                      child: FloatingActionButton(
+                        heroTag: null,
+                        onPressed: () {
+                          if (widget.isSearch == true) {
+                            widget.closeSearch();
+                            readTodoLists();
+                          } else {
+                            createTodoList('', context);
+                          }
+                        },
+                        mini: true,
+                        shape:  RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        backgroundColor: Theme.of(context).colorScheme.onSecondary,
+                        child: Transform.rotate(
+                          angle: widget.isSearch
+                              ? 45 * (3.141592653589793238 / 180)
+                              : 0.0, // Rotate 45 degrees if widget.isSearch is true
+                          child: const Icon(Icons.add),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

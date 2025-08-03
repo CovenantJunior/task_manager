@@ -422,16 +422,6 @@ class _AIAssistantState extends State<AIAssistant> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'AI Task Assistant',
-          style: TextStyle(
-            fontFamily: 'Quicksand',
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
