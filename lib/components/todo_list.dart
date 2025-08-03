@@ -1668,6 +1668,7 @@ class _TodoState extends State<Todo> with SingleTickerProviderStateMixin {
                 : const Center(child: Text("No result", style: TextStyle(fontFamily: 'Quicksand', fontWeight: FontWeight.w200))),
           floatingActionButton: Column(
             mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               (nonTrashedTodolists.isNotEmpty && !widget.isSearch && (count > 0) && (context.watch<TodoListDatabase>().preferences.first.bulkTrash == true))
                   ? Tooltip(

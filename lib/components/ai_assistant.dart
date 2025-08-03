@@ -478,8 +478,9 @@ class _AIAssistantState extends State<AIAssistant> {
                     return ListTile(
                       title: Text(tasks[index]),
                       trailing: IconButton(
-                        icon: const Icon(Icons.add),
+                        icon: tasks[index].length < 100 ? const Icon(Icons.add) : const SizedBox(),
                         onPressed: () async {
+                          Navigator.pop(context);
                           createTodoList(tasks[index], context);
                         }
                       ),
