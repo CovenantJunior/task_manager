@@ -7,7 +7,7 @@ A simple, category-based to-do list app with reminders, due dates, and an option
 ## 🚀 Features
 
 - Add, categorize, and schedule tasks
-- Set reminders (minute, hourly, daily, weekly)
+- Set reminders/notifications (minute, hourly, daily, weekly)
 - Speech-to-text input support
 - ✅ Optional: Use AI (Gemini) to generate task lists from prompts
 
