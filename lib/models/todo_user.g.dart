@@ -27,13 +27,23 @@ const TodoUserSchema = CollectionSchema(
       name: r'email',
       type: IsarType.string,
     ),
-    r'passwordHash': PropertySchema(
+    r'expires': PropertySchema(
       id: 2,
+      name: r'expires',
+      type: IsarType.dateTime,
+    ),
+    r'lastLogin': PropertySchema(
+      id: 3,
+      name: r'lastLogin',
+      type: IsarType.dateTime,
+    ),
+    r'passwordHash': PropertySchema(
+      id: 4,
       name: r'passwordHash',
       type: IsarType.string,
     ),
     r'username': PropertySchema(
-      id: 3,
+      id: 5,
       name: r'username',
       type: IsarType.string,
     )
@@ -87,8 +97,10 @@ void _todoUserSerialize(
 ) {
   writer.writeDateTime(offsets[0], object.createdAt);
   writer.writeString(offsets[1], object.email);
-  writer.writeString(offsets[2], object.passwordHash);
-  writer.writeString(offsets[3], object.username);
+  writer.writeDateTime(offsets[2], object.expires);
+  writer.writeDateTime(offsets[3], object.lastLogin);
+  writer.writeString(offsets[4], object.passwordHash);
+  writer.writeString(offsets[5], object.username);
 }
 
 TodoUser _todoUserDeserialize(
@@ -98,11 +110,13 @@ TodoUser _todoUserDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = TodoUser();
-  object.createdAt = reader.readDateTimeOrNull(offsets[0]);
+  object.createdAt = reader.readDateTime(offsets[0]);
   object.email = reader.readStringOrNull(offsets[1]);
+  object.expires = reader.readDateTimeOrNull(offsets[2]);
   object.id = id;
-  object.passwordHash = reader.readStringOrNull(offsets[2]);
-  object.username = reader.readStringOrNull(offsets[3]);
+  object.lastLogin = reader.readDateTimeOrNull(offsets[3]);
+  object.passwordHash = reader.readStringOrNull(offsets[4]);
+  object.username = reader.readStringOrNull(offsets[5]);
   return object;
 }
 
@@ -114,12 +128,16 @@ P _todoUserDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readDateTimeOrNull(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
-      return (reader.readStringOrNull(offset)) as P;
+      return (reader.readDateTimeOrNull(offset)) as P;
     case 3:
+      return (reader.readDateTimeOrNull(offset)) as P;
+    case 4:
+      return (reader.readStringOrNull(offset)) as P;
+    case 5:
       return (reader.readStringOrNull(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -215,24 +233,8 @@ extension TodoUserQueryWhere on QueryBuilder<TodoUser, TodoUser, QWhereClause> {
 
 extension TodoUserQueryFilter
     on QueryBuilder<TodoUser, TodoUser, QFilterCondition> {
-  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> createdAtIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'createdAt',
-      ));
-    });
-  }
-
-  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> createdAtIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'createdAt',
-      ));
-    });
-  }
-
   QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> createdAtEqualTo(
-      DateTime? value) {
+      DateTime value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'createdAt',
@@ -242,7 +244,7 @@ extension TodoUserQueryFilter
   }
 
   QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> createdAtGreaterThan(
-    DateTime? value, {
+    DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -255,7 +257,7 @@ extension TodoUserQueryFilter
   }
 
   QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> createdAtLessThan(
-    DateTime? value, {
+    DateTime value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
@@ -268,8 +270,8 @@ extension TodoUserQueryFilter
   }
 
   QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> createdAtBetween(
-    DateTime? lower,
-    DateTime? upper, {
+    DateTime lower,
+    DateTime upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
@@ -430,6 +432,75 @@ extension TodoUserQueryFilter
     });
   }
 
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> expiresIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'expires',
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> expiresIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'expires',
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> expiresEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'expires',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> expiresGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'expires',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> expiresLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'expires',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> expiresBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'expires',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> idEqualTo(Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
@@ -474,6 +545,75 @@ extension TodoUserQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'id',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> lastLoginIsNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNull(
+        property: r'lastLogin',
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> lastLoginIsNotNull() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(const FilterCondition.isNotNull(
+        property: r'lastLogin',
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> lastLoginEqualTo(
+      DateTime? value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'lastLogin',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> lastLoginGreaterThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'lastLogin',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> lastLoginLessThan(
+    DateTime? value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'lastLogin',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterFilterCondition> lastLoginBetween(
+    DateTime? lower,
+    DateTime? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'lastLogin',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -811,6 +951,30 @@ extension TodoUserQuerySortBy on QueryBuilder<TodoUser, TodoUser, QSortBy> {
     });
   }
 
+  QueryBuilder<TodoUser, TodoUser, QAfterSortBy> sortByExpires() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'expires', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterSortBy> sortByExpiresDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'expires', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterSortBy> sortByLastLogin() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastLogin', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterSortBy> sortByLastLoginDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastLogin', Sort.desc);
+    });
+  }
+
   QueryBuilder<TodoUser, TodoUser, QAfterSortBy> sortByPasswordHash() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'passwordHash', Sort.asc);
@@ -862,6 +1026,18 @@ extension TodoUserQuerySortThenBy
     });
   }
 
+  QueryBuilder<TodoUser, TodoUser, QAfterSortBy> thenByExpires() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'expires', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterSortBy> thenByExpiresDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'expires', Sort.desc);
+    });
+  }
+
   QueryBuilder<TodoUser, TodoUser, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -871,6 +1047,18 @@ extension TodoUserQuerySortThenBy
   QueryBuilder<TodoUser, TodoUser, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterSortBy> thenByLastLogin() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastLogin', Sort.asc);
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QAfterSortBy> thenByLastLoginDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'lastLogin', Sort.desc);
     });
   }
 
@@ -914,6 +1102,18 @@ extension TodoUserQueryWhereDistinct
     });
   }
 
+  QueryBuilder<TodoUser, TodoUser, QDistinct> distinctByExpires() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'expires');
+    });
+  }
+
+  QueryBuilder<TodoUser, TodoUser, QDistinct> distinctByLastLogin() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'lastLogin');
+    });
+  }
+
   QueryBuilder<TodoUser, TodoUser, QDistinct> distinctByPasswordHash(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
@@ -937,7 +1137,7 @@ extension TodoUserQueryProperty
     });
   }
 
-  QueryBuilder<TodoUser, DateTime?, QQueryOperations> createdAtProperty() {
+  QueryBuilder<TodoUser, DateTime, QQueryOperations> createdAtProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'createdAt');
     });
@@ -946,6 +1146,18 @@ extension TodoUserQueryProperty
   QueryBuilder<TodoUser, String?, QQueryOperations> emailProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'email');
+    });
+  }
+
+  QueryBuilder<TodoUser, DateTime?, QQueryOperations> expiresProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'expires');
+    });
+  }
+
+  QueryBuilder<TodoUser, DateTime?, QQueryOperations> lastLoginProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'lastLogin');
     });
   }
 

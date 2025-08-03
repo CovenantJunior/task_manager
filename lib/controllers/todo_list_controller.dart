@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:task_manager/models/todo_list.dart';
 import 'package:task_manager/models/todo_preferences.dart';
 import 'package:task_manager/models/todo_user.dart';
@@ -16,6 +19,11 @@ class TodoListDatabase extends ChangeNotifier{
       directory: dir.path
     );
   }
+
+  String hashPassword(String password) {
+    return sha256.convert(utf8.encode(password)).toString();
+  }
+
 
   // List of all TodoLists
   List<TodoList> todolists = [];
@@ -450,13 +458,58 @@ class TodoListDatabase extends ChangeNotifier{
       });
     }
   }
-  
+
+
+  Future<String?> signUpUser({
+    required String username,
+    required String email,
+    required String password,
+  }) async {
+    final existingUser = await isar.todoUsers.filter().emailEqualTo(email).findFirst();
+
+    if (existingUser != null) return 'Email already registered';
+
+    final newUser = TodoUser()
+      ..username = username
+      ..email = email
+      ..passwordHash = hashPassword(password)
+      ..createdAt = DateTime.now();
+
+    await isar.writeTxn(() => isar.todoUsers.put(newUser));
+    user = [newUser];
+    notifyListeners();
+
+    return null;
+  }
+
+  Future<String?> loginUser({
+    required String email,
+    required String password,
+  }) async {
+    final currentUser = await isar.todoUsers.filter().emailEqualTo(email).findFirst();
+
+    if (currentUser == null || currentUser.passwordHash != hashPassword(password)) {
+      return 'Invalid email or password';
+    }
+
+    currentUser.lastLogin = DateTime.now();
+    currentUser.expires = DateTime.now().add(const Duration(days: 14));
+    await isar.writeTxn(() => isar.todoUsers.put(currentUser));
+    user = [currentUser];
+    notifyListeners();
+
+    return null;
+  }
+
 
   // Clear User after sign-out
   void clearUser() async {
-    await isar.writeTxn(() => isar.todoUsers.clear());
+    final currentUser = await isar.todoUsers.get(1);
 
-    // Update User List
-    fetchUser();
+    await isar.writeTxn(() async {
+      currentUser?.expires = null;
+      await isar.todoUsers.put(currentUser!);
+    });
+    Restart.restartApp();
   }
 }

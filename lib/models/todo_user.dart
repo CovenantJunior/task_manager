@@ -9,5 +9,7 @@ class TodoUser {
   String? username;
   String? email;
   String? passwordHash;
-  DateTime? createdAt;
+  DateTime? lastLogin;
+  DateTime? expires;
+  DateTime createdAt = DateTime.now();
 }
