@@ -96,13 +96,16 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  void initializePreference() async {
+    context.read<TodoListDatabase>().fetchPreferences();
+  }
+
   @override
   Widget build(BuildContext context) {
+    initializePreference();
     return Consumer<TodoListDatabase>(
       builder: (context, todoListDatabase, child) {
-        // Initialize theme preference
-        todoListDatabase.fetchPreferences();
-
         return MaterialApp(
           theme: todoListDatabase.preferences.first.darkMode
               ? ThemeData.dark()
